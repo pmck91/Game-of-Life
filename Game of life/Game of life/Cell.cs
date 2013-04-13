@@ -23,11 +23,29 @@ namespace Game_of_life
         {
             this.friends = friends;
 
-            if (friends < 2 && living) { colour = Color.Red; murder(); }
-            else if (friends == 2 && living) { colour = Color.DeepSkyBlue; }
-            else if (friends == 3) { colour = Color.LawnGreen; revive(); }
-            else if (friends > 3 && living) { colour = Color.Red; murder(); }
-            else { colour = Color.White; murder(); }
+            if (living && friends < 2)
+            {
+                murder();
+            }
+            else if (living && (friends == 2))
+            {
+                revive();
+                colour = Color.DeepSkyBlue;
+            }
+            else if (living && (friends == 3))
+            {
+                revive();
+                colour = Color.Cyan;
+            }
+            else if (living && friends > 3)
+            {
+                murder();
+            }
+            else if (!living && friends == 3)
+            {
+                revive();
+                colour = Color.LawnGreen;
+            }
 
             this.friends = 0;
         }

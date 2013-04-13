@@ -18,7 +18,7 @@ namespace Game_of_life
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Life life = new Life(15, 15, 1000f);
+        Life life = new Life(250, 250, 500f);
         KeyboardState oldState = new KeyboardState();
 
         public Game1()

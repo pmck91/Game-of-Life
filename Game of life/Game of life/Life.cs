@@ -54,6 +54,16 @@ namespace Game_of_life
                 if (_elapsedTime > _tick)
                 {
 
+                    for (int i = 0; i < _height; i++)
+                    {
+                        for (int j = 0; j < _width; j++)
+                        {
+                            newGrid[i, j].playGod(findFriends(i,j));
+                        }
+                    }
+
+                    /*
+
                     #region left col
                     // left column case
                     for (int i = 1; i < _height - 1; i++)
@@ -192,9 +202,17 @@ namespace Game_of_life
                     }
                     #endregion
 
-                    grid = newGrid;
+                    */
 
-                //    purgeNewGrid();
+                    for (int i = 0; i < _height; i++)
+                    {
+                        for (int j = 0; j < _width; j++)
+                        {
+                            grid[i, j] = newGrid[i, j];
+                        }
+                    }
+
+                    purgeNewGrid();
 
                     _elapsedTime = 0f;
                 }
@@ -217,6 +235,53 @@ namespace Game_of_life
                     sb.Draw(tex, new Rectangle((j* cellWidth) + 10, (i*  cellHeight) + 10, cellWidth, cellHeight) , grid[i, j].health());
                 }
             }
+        }
+
+        public int findFriends( int yLoc,int xLoc)
+        {
+            var friends = 0;
+
+            // top right
+            if (xLoc != _width && yLoc != 0)
+                if (grid[yLoc - 1, xLoc + 1].happilyAlive())
+                    friends++;
+
+            // right
+            if (xLoc != _width)
+                if (grid[yLoc, xLoc + 1].happilyAlive())
+                    friends++;
+
+            // bottom right
+            if (xLoc != _width && yLoc != _height)
+                if (grid[yLoc + 1, xLoc + 1].happilyAlive())
+                    friends++;
+
+            // bottom
+            if (yLoc != _height)
+                if (grid[yLoc + 1, xLoc].happilyAlive())
+                    friends++;
+
+            // bottom left
+            if(xLoc != 0 && yLoc != _height)
+                if(grid[yLoc + 1, xLoc - 1].happilyAlive())
+                    friends++;
+
+            // left
+            if (xLoc != 0)
+                if (grid[yLoc, xLoc - 1].happilyAlive())
+                    friends++;
+
+            // top left
+            if (xLoc != 0 && yLoc != 0)
+                if (grid[yLoc - 1, xLoc - 1].happilyAlive())
+                    friends++;
+
+            // top
+            if (yLoc != 0)
+                if (grid[yLoc - 1, xLoc].happilyAlive())
+                    friends++;
+
+            return friends;
         }
 
         public void seed()
